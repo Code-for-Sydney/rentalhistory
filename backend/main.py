@@ -53,17 +53,18 @@ def parseOldListings(state, suburb_name, postcode, type, street_name, house_numb
           historical_prices = []
           h2_tag = div.find('h2', class_='h5')
           address = div.find('h2', class_='h5').get_text(strip=True) if h2_tag else None
+          prices = {}
           for li in div.select('.mt-3 ul li'):
                date = li.find('small').get_text(strip=True)
                price_text = li.get_text(strip=True).replace(date, '', 1).strip()
-               # clean_price = re.search('$(.*) ', price_text)
-               # print(clean_price)
                match = re.search(r'\$([^ ]+)', price_text)
                clean_price = price_text
                if match:
                     clean_price = match.group(1)
-                    print(clean_price)
-               historical_prices.append({'date': date, 'price': clean_price})
+               prices[date] = {'date': date, 'price': clean_price}
+          for price in prices:
+               historical_prices.append(prices[price])
+
           properties.append({"address": address, "last_price": last_price, "historical_prices": historical_prices})
 
      return properties
