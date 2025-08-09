@@ -71,6 +71,6 @@ def read_root(suburb_name: str, postcode: str, street_name: str, house_number: s
      extracted_postcode = suburb_data['postcode']
      state = suburb_data['state']['abbreviation']
      suburb_name = suburb_data['name']
-     type = 'buy'
+     type = 'rent'
      response = parseOldListings(state, suburb_name, extracted_postcode, type, street_name, house_number, category, minBeds, maxBeds, baths, cars, sort)
      return response
