@@ -47,10 +47,12 @@ def parseOldListings(state, suburb_name, postcode, type, street_name, house_numb
      properties = []
     
      for div in property_divs:
-          last_price = soup.find('h3', class_='text-success').get_text(strip=True)
+          h3_tag = div.find('h3', class_='text-success')
+          last_price = div.find('h3', class_='text-success').get_text(strip=True) if h3_tag else None
           historical_prices = []
-          address = soup.find('h2', class_='h5').get_text(strip=True)
-          for li in soup.select('.mt-3 ul li'):
+          h2_tag = div.find('h2', class_='h5')
+          address = div.find('h2', class_='h5').get_text(strip=True) if h2_tag else None
+          for li in div.select('.mt-3 ul li'):
                date = li.find('small').get_text(strip=True)
                price_text = li.get_text(strip=True).replace(date, '', 1).strip()
                historical_prices.append({'date': date, 'price': price_text})
@@ -67,10 +69,12 @@ def searchSuburbs(suburb_name):
 @app.get("/")
 def read_root(suburb_name: str, postcode: str, street_name: str, house_number: str, category: str, minBeds: int, maxBeds: int, baths: int, cars: int, sort: str):
      suburb_data = searchSuburbs(suburb_name)
+     if (suburb_data is None):
+          return {"error": "Suburb not found", "error_code": 404}
      print(suburb_data)
      extracted_postcode = suburb_data['postcode']
      state = suburb_data['state']['abbreviation']
      suburb_name = suburb_data['name']
      type = 'rent'
      response = parseOldListings(state, suburb_name, extracted_postcode, type, street_name, house_number, category, minBeds, maxBeds, baths, cars, sort)
-     return response
+     return {"message": "success", "data": response}
