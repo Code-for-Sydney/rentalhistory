@@ -7,6 +7,7 @@
 
 body {
   background: linear-gradient(120deg, #f8fafc 0%, #e0e7ff 100%);
+  color: #000;
 }
 
 .logo {
@@ -58,7 +59,7 @@ body {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 2rem;
-  color: #1e293b;
+  color: #000;
   letter-spacing: 1px;
 }
 
@@ -82,7 +83,7 @@ body {
 
 .form-group label {
   font-size: 1rem;
-  color: #334155;
+  color: #000;
   font-weight: 500;
 }
 
@@ -93,6 +94,7 @@ body {
   font-size: 1rem;
   background: #f1f5f9;
   transition: border 0.2s, box-shadow 0.2s;
+  color: #000;
 }
 
 .form-group input:focus {

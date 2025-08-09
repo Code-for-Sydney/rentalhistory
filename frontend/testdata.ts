@@ -1,0 +1,133 @@
+export const testData ={
+     "message": "success",
+     "data": [
+         {
+             "address": "1 MILTON ST, CHATSWOOD",
+             "last_price": "$800 per week",
+             "historical_prices": [
+                 {
+                     "date": "March 2016",
+                     "price": "800"
+                 },
+                 {
+                     "date": "March 2014",
+                     "price": "800"
+                 }
+             ]
+         },
+         {
+             "address": "1 MILTON STREET, CHATSWOOD",
+             "last_price": "$800 pw",
+             "historical_prices": [
+                 {
+                     "date": "March 2014",
+                     "price": "800"
+                 }
+             ]
+         },
+         {
+             "address": "4 MILTON STREET, CHATSWOOD",
+             "last_price": "$890",
+             "historical_prices": [
+                 {
+                     "date": "December 2017",
+                     "price": "890"
+                 },
+                 {
+                     "date": "September 2016",
+                     "price": "950"
+                 },
+                 {
+                     "date": "July 2014",
+                     "price": "860"
+                 },
+                 {
+                     "date": "November 2013",
+                     "price": "850"
+                 }
+             ]
+         },
+         {
+             "address": "4 MILTON ST, CHATSWOOD",
+             "last_price": "$920 per week",
+             "historical_prices": [
+                 {
+                     "date": "September 2016",
+                     "price": "920"
+                 },
+                 {
+                     "date": "February 2016",
+                     "price": "860"
+                 }
+             ]
+         },
+         {
+             "address": "7 MILTON STREET, CHATSWOOD",
+             "last_price": "$330",
+             "historical_prices": [
+                 {
+                     "date": "July 2018",
+                     "price": "330"
+                 },
+                 {
+                     "date": "October 2007",
+                     "price": "520"
+                 },
+                 {
+                     "date": "September 2007",
+                     "price": "550"
+                 },
+                 {
+                     "date": "August 2007",
+                     "price": "550"
+                 }
+             ]
+         },
+         {
+             "address": "8 MILTON STREET, CHATSWOOD",
+             "last_price": "Deposit Taken",
+             "historical_prices": [
+                 {
+                     "date": "August 2019",
+                     "price": "Deposit Taken"
+                 },
+                 {
+                     "date": "June 2018",
+                     "price": "Deposit Taken"
+                 },
+                 {
+                     "date": "March 2016",
+                     "price": "1,400"
+                 },
+                 {
+                     "date": "February 2016",
+                     "price": "1,400"
+                 },
+                 {
+                     "date": "May 2014",
+                     "price": "1,490"
+                 }
+             ]
+         },
+         {
+             "address": "10 MILTON STREET, CHATSWOOD",
+             "last_price": "$600",
+             "historical_prices": [
+                 {
+                     "date": "April 2007",
+                     "price": "600"
+                 }
+             ]
+         },
+         {
+             "address": "12 MILTON STREET, CHATSWOOD",
+             "last_price": null,
+             "historical_prices": [
+                 {
+                     "date": "February 2020",
+                     "price": "Auction"
+                 }
+             ]
+         }
+     ]
+ }
