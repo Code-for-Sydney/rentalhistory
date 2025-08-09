@@ -3,6 +3,7 @@ import requests
 from typing import Union
 from fastapi import FastAPI
 app = FastAPI()
+import re
 
 
 def parseOldListings(state, suburb_name, postcode, type, street_name, house_number, category, minBeds, maxBeds, baths, cars, sort):
@@ -55,7 +56,14 @@ def parseOldListings(state, suburb_name, postcode, type, street_name, house_numb
           for li in div.select('.mt-3 ul li'):
                date = li.find('small').get_text(strip=True)
                price_text = li.get_text(strip=True).replace(date, '', 1).strip()
-               historical_prices.append({'date': date, 'price': price_text})
+               # clean_price = re.search('$(.*) ', price_text)
+               # print(clean_price)
+               match = re.search(r'\$([^ ]+)', price_text)
+               clean_price = price_text
+               if match:
+                    clean_price = match.group(1)
+                    print(clean_price)
+               historical_prices.append({'date': date, 'price': clean_price})
           properties.append({"address": address, "last_price": last_price, "historical_prices": historical_prices})
 
      return properties
@@ -64,6 +72,7 @@ def searchSuburbs(suburb_name):
      url = f'https://v0.postcodeapi.com.au/suburbs.json?q={suburb_name}'
      response = requests.get(url)
      data = response.json()
+     print(data)
      return data[0]
 
 @app.get("/")
@@ -71,8 +80,10 @@ def read_root(suburb_name: str, postcode: str, street_name: str, house_number: s
      suburb_data = searchSuburbs(suburb_name)
      if (suburb_data is None):
           return {"error": "Suburb not found", "error_code": 404}
-     print(suburb_data)
+     
      extracted_postcode = suburb_data['postcode']
+     if len(postcode) > 1:
+          extracted_postcode = postcode
      state = suburb_data['state']['abbreviation']
      suburb_name = suburb_data['name']
      type = 'rent'
