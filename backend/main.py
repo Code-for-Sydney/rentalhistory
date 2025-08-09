@@ -5,7 +5,7 @@ from fastapi import FastAPI
 app = FastAPI()
 
 
-def parseOldListings(url):
+def parseOldListings(state, suburb_name, postcode, type, street_name, house_number, category, minBeds, maxBeds, baths, cars, sort):
      headers = {
      'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
      'accept-language': 'en-US,en;q=0.9,mn-MN;q=0.8,mn;q=0.7',
@@ -22,6 +22,23 @@ def parseOldListings(url):
      'upgrade-insecure-requests': '1',
      'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36',
      }
+     page = 1
+     url = f'https://www.oldlistings.com.au/real-estate/{state}/{suburb_name}/{postcode}/{type}/{page}/'
+     if (len(street_name) > 0):
+          url = url + street_name
+     if (len(category) > 0):
+          url = url + f':cat:{category}'
+     if (minBeds > 0):
+          url = url + f':bed:{minBeds}'
+     if (maxBeds > 0):
+          url = url + f':bedmax:{maxBeds}'
+     if (baths > 0):
+          url = url + f':bath:{baths}'
+     if (cars > 0):
+          url = url + f':car:{cars}'
+     if (len(sort) > 0):
+          url = url + f':sort:{sort}'
+     print(url)
      response = requests.get(url, headers=headers)
      soup = BeautifulSoup(response.text, 'html.parser')
         
@@ -41,9 +58,6 @@ def parseOldListings(url):
 
      return properties
 
-
-# https://v0.postcodeapi.com.au/suburbs.json?q=Milsons%20point
-
 def searchSuburbs(suburb_name):
      url = f'https://v0.postcodeapi.com.au/suburbs.json?q={suburb_name}'
      response = requests.get(url)
@@ -51,14 +65,12 @@ def searchSuburbs(suburb_name):
      return data[0]
 
 @app.get("/")
-def read_root(suburb_name: str):
+def read_root(suburb_name: str, postcode: str, street_name: str, house_number: str, category: str, minBeds: int, maxBeds: int, baths: int, cars: int, sort: str):
      suburb_data = searchSuburbs(suburb_name)
      print(suburb_data)
-     postcode = suburb_data['postcode']
+     extracted_postcode = suburb_data['postcode']
      state = suburb_data['state']['abbreviation']
      suburb_name = suburb_data['name']
      type = 'buy'
-     url = f'https://www.oldlistings.com.au/real-estate/{state}/{suburb_name}/{postcode}/{type}/'
-     print(url)
-     response = parseOldListings(url)
+     response = parseOldListings(state, suburb_name, extracted_postcode, type, street_name, house_number, category, minBeds, maxBeds, baths, cars, sort)
      return response
